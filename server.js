@@ -14,7 +14,9 @@ const express = require('express'),
     mongoose = require('mongoose');
 
 //routes
-const landing = require('./routers/landing.js'), 
+const landing = require('./routers/landing.js'),
+    zone = require('./routers/zone.js'),
+    reserve = require('./routers/reserves.js'),
     auth = require('./routers/auth.js');
 
 const app = express(),
@@ -51,6 +53,8 @@ app.use(passport.session())
 //main
 app.use('/', landing) //done
 app.use('/', auth) //done
+app.use('/zone', zone);
+app.use('/reserve', reserve);
 
 app.get('/404', (req, res) => {
     res.render('404', { user: req.user })

@@ -16,8 +16,7 @@
         </div>
         <div class="otp">
             <h3>Enter OTP</h3>
-            <form method="post" class="otp-digits" data-group-name="digits" data-autosubmit="false"
-                autocomplete="off">
+            <form method="post" class="otp-digits" data-group-name="digits" data-autosubmit="false" autocomplete="off">
                 <input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
                 <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
                 <input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
@@ -30,6 +29,8 @@
 </div>
 
 <script>
+    var notyf = new Notyf();
+
     function requestotp() {
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
@@ -45,9 +46,18 @@
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            console.log(data);
+            if (data[0].sucess == true) {
+                notyf.success("Please enter the otp sent on your mail to continue!");
+                document.querySelector(".login").style.display = "none";
+                document.querySelector(".otp").style.display = "flex";
+            } else {
+                for (i in data) {
+                    notyf.error(data[i].msg);
+                }
+            }
         });
     }
+
     $('.otp-digits').find('input').each(function () {
         $(this).attr('maxlength', 1);
         $(this).on('keyup', function (e) {
@@ -72,15 +82,19 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            otp: document.getElementById('digit-1').value + document.getElementById('digit-2').value +
-                                document.getElementById('digit-3').value + document.getElementById('digit-4').value +
+                            otp: document.getElementById('digit-1').value + document
+                                .getElementById('digit-2').value +
+                                document.getElementById('digit-3').value + document
+                                .getElementById('digit-4').value +
                                 document.getElementById('digit-5').value
                         })
                     }).then((res) => {
-                        if (res.status == 200) {
+                        res = res.json();
+                        if (res.success) {
+                            notyf.success(res.msg);
                             window.location.href = '/dashboard';
                         } else {
-                            alert('Invalid OTP');
+                            notyf.error(res.msg);
                         }
                     })
                 }
