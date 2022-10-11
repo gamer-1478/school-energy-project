@@ -13,11 +13,7 @@ const userSchema = new mongoose.Schema({
     date: {
         type: String,
         default: dateStringWithTime
-    },
-    userId: reqString,
-    admin: reqBoolean,
-    cart: [{ prodid: nonreqString, quan: 0 }],
-    orders: []
+    }
 })
 
 module.exports = mongoose.model("User", userSchema)

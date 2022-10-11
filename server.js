@@ -14,7 +14,8 @@ const express = require('express'),
     mongoose = require('mongoose');
 
 //routes
-const landing = require('./routers/landing.js');
+const landing = require('./routers/landing.js'), 
+    auth = require('./routers/auth.js');
 
 const app = express(),
     PORT = process.env.PORT || 5000;
@@ -26,6 +27,9 @@ app.use(express.json({ limit: '1mb' }), express.urlencoded({ extended: true, lim
 app.use(flash())
 app.use(expressLayouts)
 app.use('/', express.static('public'))
+
+//expose public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 //passport middleware
 app.use(session({
@@ -46,6 +50,7 @@ app.use(passport.session())
 
 //main
 app.use('/', landing) //done
+app.use('/', auth) //done
 
 app.get('/404', (req, res) => {
     res.render('404', { user: req.user })

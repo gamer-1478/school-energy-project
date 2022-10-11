@@ -1,0 +1,279 @@
+<div class="landing-full">
+    <div class="landing-left">
+        <img class="landing-img" src="/energy.png">
+        <h1 class="landing-text">Kritima Tarak</h1>
+        <p class="landing-passage">AI Predictive power management portal!</p>
+        <img class="landing-animation" src="ohk1.png">
+    </div>
+    <div class="landing-right">
+        <div class="login">
+            <h3>Welcome back</h3>
+            <label for="email"><img src="/email.png" width="20px">Email</label>
+            <input type="text" placeholder="agent@gov.in" id="email">
+            <label for="password"><img src="/password.png" width="20px">Password</label>
+            <input type="password" placeholder="agent@securepass1234" id="password">
+            <button class="otp-btn" onclick="requestotp()">Request OTP</button>
+        </div>
+        <div class="otp">
+            <h3>Enter OTP</h3>
+            <form method="post" class="otp-digits" data-group-name="digits" data-autosubmit="false"
+                autocomplete="off">
+                <input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
+                <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
+                <input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
+                <input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />
+                <input type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" />
+            </form>
+            <p>Didn't recieve!</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function requestotp() {
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            console.log(data);
+        });
+    }
+    $('.otp-digits').find('input').each(function () {
+        $(this).attr('maxlength', 1);
+        $(this).on('keyup', function (e) {
+            var parent = $($(this).parent());
+
+            if (e.keyCode === 8 || e.keyCode === 37) {
+                var prev = parent.find('input#' + $(this).data('previous'));
+
+                if (prev.length) {
+                    $(prev).select();
+                }
+            } else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (
+                    e.keyCode >= 96 &&
+                    e.keyCode <= 105) || e.keyCode === 39) {
+                var next = parent.find('input#' + $(this).data('next'));
+                if (next.length) {
+                    $(next).select();
+                } else if (document.getElementById('digit-5').value != '') {
+                    fetch('/verifyotp', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            otp: document.getElementById('digit-1').value + document.getElementById('digit-2').value +
+                                document.getElementById('digit-3').value + document.getElementById('digit-4').value +
+                                document.getElementById('digit-5').value
+                        })
+                    }).then((res) => {
+                        if (res.status == 200) {
+                            window.location.href = '/dashboard';
+                        } else {
+                            alert('Invalid OTP');
+                        }
+                    })
+                }
+            }
+        });
+    });
+</script>
+
+<style>
+    .otp-digits {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 35px;
+    }
+
+    .otp-digits input {
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 20px;
+        background-color: #252525;
+        margin-left: 10px;
+        color: white;
+        outline: none;
+    }
+
+    .otp {
+        display: none;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        color: #fff;
+        background-color: 141414;
+        min-height: 30vh;
+        border-radius: 30px;
+        margin-top: 50px;
+    }
+
+    .otp p {
+        margin-left: 45px;
+        margin-top: 20px;
+    }
+
+    .landing-animation {
+        object-fit: cover;
+        width: 370px;
+        height: 280px;
+        transform: rotate(45deg);
+        margin-top: 100px;
+    }
+
+    .landing-passage {
+        font-size: 20px;
+        font-weight: 300;
+        color: #fff;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    .otp-btn {
+        background-color: #41E661;
+        border: none;
+        border-radius: 14px;
+        margin-top: 30px;
+        color: black;
+        padding: 15px 32px;
+        width: 80%;
+        align-self: center;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .login label {
+        display: flex;
+        align-items: center;
+        margin-left: 4vw;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .login label img {
+        margin-right: 10px;
+    }
+
+    .login input {
+        align-self: center;
+        width: 80%;
+        height: 50px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: none;
+        outline: none;
+        padding: 0 10px;
+        background-color: #252525;
+        color: white;
+    }
+
+    .login {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        color: #fff;
+        background-color: 141414;
+        height: 60vh;
+        border-radius: 30px;
+    }
+
+    .login h3,
+    .otp h3 {
+        margin-top: 30px;
+        margin-left: 50px;
+        font-size: 2rem;
+        font-weight: 400;
+        margin-bottom: 10px;
+    }
+
+    .landing-text {
+        font-size: 3rem;
+        font-weight: 400;
+        color: #16e16e;
+        margin-top: 6vh;
+        margin-left: 20px;
+    }
+
+    .landing-img {
+        width: 8vw;
+        height: 8vw;
+    }
+
+    .landing-full {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+        background-color: #000;
+    }
+
+    .landing-left {
+        margin-top: 110px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 55vw;
+        min-height: 100vh;
+    }
+
+    .landing-right {
+        width: 450px;
+        min-height: 100vh;
+    }
+
+    @media screen and (max-width: 768px) {
+        .otp-digits {
+            margin-left: 20px;
+        }
+
+        .otp h3 {
+            align-self: flex-start;
+            margin-left: 30px;
+        }
+
+        .landing-img {
+            width: 30vw;
+            height: 30vw;
+        }
+
+        .landing-full {
+            flex-direction: column;
+        }
+
+        .landing-left {
+            width: 90vw;
+            height: 50vh;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 100px;
+        }
+
+        .landing-right {
+            width: 90vw;
+            height: 50vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+    }
+</style>
