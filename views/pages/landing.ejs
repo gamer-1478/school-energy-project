@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<header class="navbar-container">
+    <nav class="navbar">
+        <a href="/" class="nav-branding"><img src="/energy.png">Kritima Tarak</a>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="/admin" class="nav-link">Admin</a>
+            </li>
+            <li class="nav-item">
+                <a href="/public/paybill" class="nav-link">Pay Bills</a>
+            </li>
+            <li class="nav-item">
+                <a href="/public/all" class="nav-link">City View</a>
+            </li>
+            <li class="nav-item">
+                <a href="/public/issue" class="nav-link">Report Issues</a>
+            </li>
+        </ul>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
+</header>
+<div class="landing">
+    <div class="ad-row">
+        <img style="width:90vw;"
+            src="https://cdn.discordapp.com/attachments/1029329076420358144/1029737035143073854/unknown.png">
+    </div>
+    <div class="stats">
+        <h2 style="font-size: 28px; font-weight: 400; opacity: 85%;">AI Based Energy Saving Platform</h2>
+        <h5 style="font-size: 54px; font-weight: 400; width: 60%;">Energy Saved is Energy
+            Generated</h2>
+            <div class="numbers">
+                <div class="col1">
+                    <div class="number-cont">
+                        <h1>300MW+</h1>
+                        <h2>Energy can be saved</h2>
+                    </div>
+                    <div class="number-cont">
+                        <h1>1900+</h1>
+                        <h2>Cities suitable for implementation</h2>
+                    </div>
+                </div>
+                <div class="col2">
+                    <div class="number-cont">
+                        <h1>75+</h1>
+                        <h2>Reserves ready to sell</h2>
+                    </div>
+                    <div class="number-cont">
+                        <h1>1900+</h1>
+                        <h2>Cities suitable for implementation</h2>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="ad-row">
+        <img style="width:90vw;"
+            src="https://cdn.discordapp.com/attachments/1029329076420358144/1029736961688207400/unknown.png" alt="hmm">
+    </div>
+    <div class="demo">
+        <h2 style="font-size: 22px; opacity: 85%; color: #fff; font-weight: 400;">Tutorial Video</h2>
+        <h1
+            style="font-size: 42px; opacity: 100%; color: #fff; font-weight: 300;margin-bottom: 50px; margin-top: 30px;">
+            Demo on how to
+            use
+            our app!</h1>
+        <iframe style="width: 70vw; height: 60vh;" src="https://www.youtube.com/embed/rK1mhvv920s"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        <br><br> <br><br>
+    </div>
+
+</div>
+
+
+<style>
+    .demo {
+        width: 70%;
+        margin-top: 50px;
+        height: max-content;
+    }
+
+    .number-cont {
+        width: 100%;
+        height: 200px;
+    }
+
+    .numbers {
+        display: flex;
+        margin-top: 100px;
+        justify-content: space-between;
+    }
+
+    .col1,
+    .col2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .numbers h1 {
+        font-size: 48px;
+        font-weight: 400;
+        margin: 0;
+        color: #16e16e;
+    }
+
+    .numbers h2 {
+        font-size: 24px;
+        font-weight: 400;
+        margin: 0;
+        opacity: 45%;
+        color: #FFFFFF;
+    }
+
+    .stats {
+        background-image: url("https://cdn.discordapp.com/attachments/1029329076420358144/1029737161764909176/unknown.png");
+        width: 80%;
+        margin-top: 150px;
+        color: #fff;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: right;
+    }
+
+    .landing {
+        background-color: #000;
+        min-height: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .nav-branding img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+
+    .nav-branding {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .navbar-container {
+        color: #fff;
+        background-color: #000;
+        border-bottom: 4px solid #686A74;
+    }
+
+    .nav-item {
+        list-style: none;
+    }
+
+    .nav-branding {
+        font-size: 1.5rem;
+        margin-right: 3vw;
+    }
+
+    .nav-link {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+
+    .nav-branding {
+        text-decoration: none;
+        font-weight: 400;
+        color: #16e16e;
+    }
+
+    .navbar {
+        min-height: 90px;
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        justify-content: space-between;
+    }
+
+
+    .nav-menu {
+        /* margin-left: 2.5vw; */
+        display: flex;
+        align-items: center;
+        gap: 3vw;
+        z-index: 1;
+    }
+
+    .nav-link {
+        transition: 0.3s ease-out;
+    }
+
+    .nav-link:hover {
+        color: dodgerblue;
+    }
+
+    .hamburger {
+        display: none;
+        cursor: pointer;
+    }
+
+    .bar {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        background-color: white;
+    }
+
+    @media(max-width:768px) {
+        .number-cont {
+            height: max-content;
+            margin-bottom: 20px;
+        }
+
+        .number-cont h1 {
+            font-size: 22px;
+        }
+
+        .number-cont h2 {
+            font-size: 16px;
+        }
+
+        .numbers {
+            margin-top: 50px;
+            flex-direction: column;
+        }
+
+        .stats {
+            margin-top: 50px;
+        }
+
+        .stats h2 {
+            font-size: 24px;
+            font-weight: 400;
+            width: 100%;
+        }
+
+        .stats h5 {
+            font-size: 36px !important;
+            font-weight: 400;
+            width: 100% !important;
+
+        }
+
+        .hamburger {
+            display: block;
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .nav-menu {
+            position: fixed;
+            left: -100%;
+            top: 90px;
+            gap: 0;
+            height: 1vh;
+            flex-direction: column;
+            background-color: #000;
+            width: 100%;
+            height: calc(100vh - 90px);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .nav-item {
+            margin: 2vh;
+        }
+
+        .nav-menu.active {
+            left: 0;
+        }
+
+        .navbar {
+            justify-content: space-between;
+        }
+    }
+</style>
+
+<script>
+    const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+
+    hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+    })
+
+    document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        navMenu.classList.remove("active");
+    }))
+</script>

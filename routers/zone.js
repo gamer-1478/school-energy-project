@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../schemas/userSchema.js');
 const Zone = require('../schemas/zoneSchema.js');
+const Reserve = require('../schemas/reserveSchema.js');
 const { ensureAuthenticated, ensureNotAuthenticated } = require('../utils/auth.js');
 const data = require('../utils/chart.json');
 
@@ -25,12 +26,18 @@ router.post('/add', ensureAuthenticated, async (req, res) => {
     })
 });
 
+router.get('/all', ensureAuthenticated, async (req, res) => {
+    const zones = await Zone.find({});
+    res.render('pages/allzones.ejs', { user: req.user, zones: zones });
+});
+
 router.get('/:id', ensureAuthenticated, async (req, res) => {
     const zone = await Zone.findById(req.params.id);
-    const labels = zone.powerConspumption.map((item) => item.time );
+    const labels = zone.powerConspumption.map((item) => item.time);
     var currentTimeToNearestTenMinutes = new Date();
     currentTimeToNearestTenMinutes.setMinutes(Math.round(currentTimeToNearestTenMinutes.getMinutes() / 10) * 10);
     currentTimeToNearestTenMinutes.setSeconds(0);
+
     //get time only
     currentTimeToNearestTenMinutes = currentTimeToNearestTenMinutes.toTimeString().split(' ')[0];
 
@@ -41,6 +48,7 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
             return item.power;
         }
     });
+
     const dataPredicted = zone.powerConspumption.map((item) => {
         if (item.time < currentTimeToNearestTenMinutes) {
             return NaN;
@@ -48,7 +56,13 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
             return item.power;
         }
     });
-    res.render('pages/zoneview.ejs', { user: req.user, zone: zone, labels, dataConsumed, dataPredicted });
+
+    var reserves = zone.reserves.map(async (item) => {
+        const reserve = await Reserve.findById(item);
+        return reserve;
+    });
+    reserves = await Promise.all(reserves);
+    res.render('pages/zoneview.ejs', { user: req.user, zone: zone, labels, dataConsumed, dataPredicted, reserves: await reserves });
 })
 
 module.exports = router;

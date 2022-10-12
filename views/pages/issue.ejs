@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<% if (typeof user != "undefined" ){ %> 
 <header class="navbar-container">
     <nav class="navbar">
         <a href="/" class="nav-branding"><img src="/energy.png">Kritima Tarak</a>
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="/zone/all" class="nav-link">Zone Based</a>
+                <a href="/admin" class="nav-link">Admin</a>
             </li>
             <li class="nav-item">
-                <a href="https://www.figma.com/proto/wokueJIvWki1ct7juwMSPf/Energy?node-id=117%3A742&scaling=scale-down&page-id=0%3A1&starting-point-node-id=117%3A290&show-proto-sidebar=1"
-                    target="_blank" class="nav-link">City Based</a>
+                <a href="/public/paybill" class="nav-link">Pay Bills</a>
             </li>
             <li class="nav-item">
-                <a href="/profile" class="nav-link"><%=user.email%></a>
+                <a href="/public/all" class="nav-link">City View</a>
+            </li>
+            <li class="nav-item">
+                <a href="/public/issue" class="nav-link">Report Issues</a>
             </li>
         </ul>
         <div class="hamburger">
@@ -23,6 +24,12 @@
     </nav>
 </header>
 
+<script>
+    window.onpageshow = function(event) {
+        window.location.href =
+        "https://www.figma.com/proto/wokueJIvWki1ct7juwMSPf/Energy?node-id=72%3A157&scaling=scale-down&page-id=0%3A1&starting-point-node-id=117%3A4&show-proto-sidebar=1"
+    };
+</script>
 
 <style>
     .nav-branding img {
@@ -50,7 +57,7 @@
 
     .nav-branding {
         font-size: 1.5rem;
-                margin-right: 3vw;
+        margin-right: 3vw;
     }
 
     .nav-link {
@@ -165,4 +172,3 @@
         navMenu.classList.remove("active");
     }))
 </script>
-<% } %>

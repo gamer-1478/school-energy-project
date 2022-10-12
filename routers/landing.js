@@ -1,9 +1,12 @@
 const router = require('express').Router();
 const {ensureNotAuthenticated} = require('../utils/auth.js');
 
-router.get('/', ensureNotAuthenticated, (req, res) => {
-    req.user = { email: "newemail@gov.in" }
-    res.render('index')
+router.get('/admin', ensureNotAuthenticated, (req, res) => {
+    res.render('pages/adminlogin.ejs')
 });
+
+router.get('/', (req,res)=>{
+    res.render('pages/landing.ejs')
+})
 
 module.exports = router;

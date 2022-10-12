@@ -1,0 +1,78 @@
+<div class="zone-all">
+    <div class="top-details">
+        <h1 style="font-size: 3rem; color: #fff; font-weight: 400;" >Gurgaon</h1>
+        <h2 style="color: #686A74; opacity: 85%;">Haryana</h2>
+    </div>
+    <div class="all-cards">
+        <% for (i in zones){ %>
+        <div class="card" id="<%= zones[i]._id %>" onclick="openzone('<%- zones[i]._id %>')">
+            <div class="card-top">
+                <div class="card-left">
+                    <h1 style="font-size: 2.5rem; font-weight: 300;"><%= zones[i].zonename %></h1>
+                    <h2 style="font-size: 1.3rem; font-weight: 300; color: #FFFFFF; opacity: 45%;"><%= zones[i].zonelocation %></h2>
+                </div>
+                <div class="card-right" style="padding: 5px; background-color:#E4644E; border-radius: 10px; color: #000; padding-left: 15px; padding-right: 15px;">
+                    <h1 style="font-weight: 300;"><%= zones[i].reports.length %></h1>
+                </div>
+            </div>
+            <h3 style="font-weight:400;"><span style="font-size: 30px; color: #16e16e; font-weight: 400;">15
+                    MJ</span>&nbsp;&nbsp; Power Consumption</h3>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<style>
+    .top-details {
+        margin-top: 5vh;
+        margin-left: 12vw;
+        margin-bottom: 5vh;
+    }
+    .all-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+    .zone-all {
+        display: flex;
+        flex-direction: column;
+        background-color: black;
+        min-height: calc(100% - 90px);
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        background-color: #141414;
+        width: 30vw;
+        min-height: 20vh;
+        color: #fff;
+        padding: 20px;
+        justify-content: space-between;
+        border-radius: 12px;
+    }
+
+    .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    @media screen and (max-width: 768px) {
+        .card {
+            width: 80vw;
+            margin-top: 40px;
+        }
+        .all-cards {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+
+<script>
+    function openzone(id) {
+        window.location.href = "/zone/" + id;
+    }
+</script>

@@ -11,6 +11,7 @@ const reserveSchema = new mongoose.Schema({
     reservename: reqString,
     status: { type: Number, required: true, default: 0 },
     powerProduction: [{ time: reqString, power: reqNumber }],
+    energyLeft: {type: Number, required: true, default: 75},
     date: {
         type: String,
         default: dateStringWithTime

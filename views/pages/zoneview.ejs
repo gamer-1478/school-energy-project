@@ -23,16 +23,64 @@
             <canvas id="myChart"></canvas>
         </div>
         <div class="reserves">
-            <h1></h1>
+            <% for (i in reserves){ %>
+            <div class="reserves-card">
+                <h1 class="reserve-name"><%= reserves[i].reservename %></h1>
+                <div style="margin-top: 30px;">
+                    <h2 class="energy-left"><span style="color: #16e16e;"><%= reserves[i].energyLeft %>%</span> 
+                        <span style="color: #fff; font-size:18px; font-weight:400;">Energy Left</span></h2>
+                    <img class="reserve-button" src="/Component 1.png">
+                    <button class="reserve-toggle" onclick="test()">ON</button>
+                </div>
+            </div>
+            <% } %>
         </div>
     </div>
+    <br><br>
 </div>
 
 <style>
+    .reserve-toggle {
+        position: absolute;
+        font-size: 24px;
+        margin-top: 14.5vh;
+        margin-left: -9.6vw;
+        background-color: transparent;
+        border: none;
+        border-radius: 10px;
+        width: 5vw;
+        cursor: pointer;
+    }
+    .energy-left {
+        margin-left: 12vw;
+        padding-top: 6vh;
+        position: absolute;
+    }
+    .reserve-button {
+        height: 30vh;
+        margin-top: 10px;
+    }
+    .reserve-name {
+        font-size: 30px;
+        font-weight: 400;
+        color: #fff;
+    }
+    .reserves {
+        background-color: #141414;
+        left: -20px;
+        padding: 20px;
+        border-radius: 20px;
+        width: 30vw;
+        height: 47vh;
+    }
+    .reserves-card {
+        margin-left: 40px;
+    }
+
     .zone-bottom {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-evenly;
         align-items: center;
         margin-top: 20px;
     }
@@ -47,6 +95,7 @@
 
     .power-consumption-chart {
         width: 40%;
+        height: 40%;
         background-color: #141414;
         padding: 20px;
         border-radius: 20px;
@@ -189,11 +238,39 @@
             padding: 0;
             margin: 5px;
         }
+        .zone-bottom {
+            flex-direction: column;
+        }
+        .reserves {
+            width: 80%;
+            margin: 5px;
+        }
+        .energy-left {
+            font-size: 20px;
+            margin-left: 35vw;
+        }
+        .reserve-toggle {
+        margin-top: 14.5vh;
+        margin-left: -32vw;
+        }
     }
 </style>
 
 <script>
+    var notyf = new Notyf({
+        duration: 3000,
+        position: {
+            x: 'right',
+            y: 'bottom',
+        },
+        types: [{
+            type: 'success',
+            background: '#16e16e',
+            icon: false,
+        }]
+    });
     function buttontoggle() {
+        test()
         var buttontoggle = document.getElementsByClassName("toggle-switch-container")[0];
         for (var i = 0; i < buttontoggle.children.length; i++) {
             buttontoggle.children[i].classList.toggle("active");
@@ -265,4 +342,8 @@
 
     const ctx = document.getElementById('myChart').getContext('2d');
     window.myLine = new Chart(ctx, config);
+
+    function test(){
+        notyf.error('You don\'t have enough authorization to do that!');
+    }
 </script>
