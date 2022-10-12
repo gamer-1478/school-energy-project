@@ -88,9 +88,10 @@
                                 .getElementById('digit-4').value +
                                 document.getElementById('digit-5').value
                         })
-                    }).then((res) => {
-                        res = res.json();
-                        if (res.success) {
+                    }).then(async (res) => {
+                        res = await res.json();
+                        res = res[0];
+                        if (res.sucess) {
                             notyf.success(res.msg);
                             window.location.href = '/dashboard';
                         } else {

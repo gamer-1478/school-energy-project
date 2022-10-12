@@ -1,0 +1,268 @@
+<div class="zone-container">
+    <div class="zone-top">
+        <div class="zone-top-left">
+            <div class="zone-top-left-details">
+                <h1 class="zonename"><%= zone.zonename %></h1>
+                <div class="zonelocation"><img width="30px" src="/location.png" />
+                    <p><%= zone.zonelocation %></p>
+                </div>
+            </div>
+            <div class="toggle-switch-container" onclick="buttontoggle()">
+                <span class="active">ON</span>
+                <span class="unactive">OFF</span>
+            </div>
+        </div>
+        <div class="zone-top-right">
+            <h1 class="zone-report"><%= zone.reports.length %> Pending</h1>
+            <p class="view-reports">View Reports</p>
+        </div>
+    </div>
+    <div class="zone-bottom">
+        <div class="power-consumption-chart">
+            <h1 class="power-title">Power Consumption Graph</h1>
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="reserves">
+            <h1></h1>
+        </div>
+    </div>
+</div>
+
+<style>
+    .zone-bottom {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .power-title {
+        font-size: 20px;
+        font-weight: 400;
+        margin-bottom: 20px;
+        color: white;
+        opacity: 85%;
+    }
+
+    .power-consumption-chart {
+        width: 40%;
+        background-color: #141414;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .view-reports {
+        color: #686A74;
+        font-size: 20px;
+    }
+
+    .zone-report {
+        font-size: 50px;
+        font-weight: 400;
+        margin: 10px;
+        color: #BB3F3F;
+    }
+
+    .zone-top-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 30%;
+        height: 100%;
+        border-radius: 0 0 0 10px;
+    }
+
+    .zone-top-left-details {
+        display: flex;
+        flex-direction: column;
+        width: 20vw;
+    }
+
+    .zone-container {
+        width: 100%;
+        min-height: calc(100% - 90px);
+        display: flex;
+        flex-direction: column;
+        background-color: black;
+    }
+
+    .zone-top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin: 70px;
+        margin-bottom: 20px;
+    }
+
+    .zone-top-left {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .toggle-switch-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        border-radius: 20px;
+        border: 2px solid #686A74;
+        cursor: pointer;
+    }
+
+    .toggle-switch-container span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 70px;
+        height: 50px;
+        border: none !important;
+        border-radius: 15px;
+        margin: 5px;
+        font-size: 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .active {
+        background-color: #16e16e;
+        color: black;
+    }
+
+    .unactive {
+        background-color: transparent;
+        color: #686A74;
+    }
+
+    .zonename {
+        font-size: 4em;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    .zonelocation {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 10vh;
+        width: max-content;
+    }
+
+    .zonelocation p {
+        font-size: 1.5em;
+        font-weight: 400;
+        margin-left: 10px;
+        margin-bottom: 5px;
+        color: #686A74;
+    }
+
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+    @media screen and (max-width: 768px) {
+        .zone-top {
+            margin: 20px;
+            flex-direction: column;
+        }
+
+        .zone-top-left {
+            width: 100%;
+        }
+
+        .zone-top-left-details {
+            width: 100%;
+        }
+
+        .zone-top-right {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .power-consumption-chart {
+            width: 95%;
+            padding: 0;
+            margin: 5px;
+        }
+    }
+</style>
+
+<script>
+    function buttontoggle() {
+        var buttontoggle = document.getElementsByClassName("toggle-switch-container")[0];
+        for (var i = 0; i < buttontoggle.children.length; i++) {
+            buttontoggle.children[i].classList.toggle("active");
+            buttontoggle.children[i].classList.toggle("unactive");
+        }
+    }
+
+    window.chartColors = {
+        green: 'rgb(65, 230, 97)',
+        grey: 'rgb(104, 106, 116)'
+    };
+
+    var config = {
+        type: 'line',
+        data: {
+            labels: [ <%for (i in labels) {%> "<%= labels[i] %>", <% } %>
+            ],
+            datasets: [{
+                label: 'Power Used',
+                data: [ <%= dataConsumed %> ],
+                borderColor: window.chartColors.green,
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                fill: false,
+                cubicInterpolationMode: 'monotone'
+            }, {
+                label: 'Power Predicted To be used',
+                data: [ <%= dataPredicted %> ],
+                borderColor: window.chartColors.grey,
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                fill: false,
+                lineTension: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            title: {
+                display: false,
+            },
+            tooltips: {
+                mode: 'index'
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value'
+                    },
+                    ticks: {
+                        suggestedMin: -10,
+                        suggestedMax: 200,
+                    }
+                }]
+            }
+        }
+    };
+
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    window.myLine = new Chart(ctx, config);
+</script>

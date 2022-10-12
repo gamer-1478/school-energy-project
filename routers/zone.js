@@ -25,4 +25,30 @@ router.post('/add', ensureAuthenticated, async (req, res) => {
     })
 });
 
+router.get('/:id', ensureAuthenticated, async (req, res) => {
+    const zone = await Zone.findById(req.params.id);
+    const labels = zone.powerConspumption.map((item) => item.time );
+    var currentTimeToNearestTenMinutes = new Date();
+    currentTimeToNearestTenMinutes.setMinutes(Math.round(currentTimeToNearestTenMinutes.getMinutes() / 10) * 10);
+    currentTimeToNearestTenMinutes.setSeconds(0);
+    //get time only
+    currentTimeToNearestTenMinutes = currentTimeToNearestTenMinutes.toTimeString().split(' ')[0];
+
+    const dataConsumed = zone.powerConspumption.map((item) => {
+        if (item.time > currentTimeToNearestTenMinutes) {
+            return NaN;
+        } else {
+            return item.power;
+        }
+    });
+    const dataPredicted = zone.powerConspumption.map((item) => {
+        if (item.time < currentTimeToNearestTenMinutes) {
+            return NaN;
+        } else {
+            return item.power;
+        }
+    });
+    res.render('pages/zoneview.ejs', { user: req.user, zone: zone, labels, dataConsumed, dataPredicted });
+})
+
 module.exports = router;
