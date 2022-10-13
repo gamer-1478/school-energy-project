@@ -28,13 +28,13 @@ router.post('/add', ensureAuthenticated, async (req, res) => {
 
 router.get('/all', ensureAuthenticated, async (req, res) => {
     const zones = await Zone.find({});
-    res.render('pages/allzones.ejs', { user: req.user, zones: zones });
+    res.render('pages/publiccity.ejs', { user: req.user, zones: zones });
 });
 
 router.get('/:id', ensureAuthenticated, async (req, res) => {
     const zone = await Zone.findById(req.params.id);
     const labels = zone.powerConspumption.map((item) => item.time);
-    var currentTimeToNearestTenMinutes = new Date();
+    var currentTimeToNearestTenMinutes = new Date("IST");
     currentTimeToNearestTenMinutes.setMinutes(Math.round(currentTimeToNearestTenMinutes.getMinutes() / 10) * 10);
     currentTimeToNearestTenMinutes.setSeconds(0);
 
