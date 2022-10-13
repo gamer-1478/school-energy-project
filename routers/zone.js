@@ -34,7 +34,7 @@ router.get('/all', ensureAuthenticated, async (req, res) => {
 router.get('/:id', ensureAuthenticated, async (req, res) => {
     const zone = await Zone.findById(req.params.id);
     const labels = zone.powerConspumption.map((item) => item.time);
-    var currentTimeToNearestTenMinutes = new Date("IST");
+    var currentTimeToNearestTenMinutes = new Date(new Date().toLocaleString('en', { timeZone: 'Asia/Kolkata' }));
     currentTimeToNearestTenMinutes.setMinutes(Math.round(currentTimeToNearestTenMinutes.getMinutes() / 10) * 10);
     currentTimeToNearestTenMinutes.setSeconds(0);
 
