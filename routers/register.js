@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../schemas/userSchema.js');
+const bcrypt = require('bcrypt');
 const { ensureAuthenticated, ensureNotAuthenticated } = require('../utils/auth.js');
 
 //gov employs will be registeredby one admin only through some other pannel, this is for testing only. commented out
