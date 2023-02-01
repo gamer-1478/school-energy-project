@@ -20,6 +20,8 @@ const landing = require('./routers/landing.js'),
     dashboard = require('./routers/dashboard.js'),
     public = require('./routers/public.js'),
     auth = require('./routers/auth.js');
+const reserveSchema = require('./schemas/reserveSchema.js');
+const zoneSchema = require('./schemas/zoneSchema.js');
 
 const app = express(),
     PORT = process.env.PORT || 5000;
@@ -59,6 +61,15 @@ app.use('/', dashboard); //[TODO]
 app.use('/zone', zone);
 app.use('/reserve', reserve);
 app.use('/public', public);
+
+app.get('/test', async (req, res) => {
+    res.send(zoneSchema.find({}).then((doc) => {
+        console.log(doc);
+    }).catch((err) => {
+        console.log(err);
+    }
+    ))
+})
 
 app.get('/404', (req, res) => {
     res.render('404', { user: req.user })
